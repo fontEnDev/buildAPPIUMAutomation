@@ -4,7 +4,6 @@ import com.tma.appium.frame.CommonFunction;
 import com.tma.appium.frame.StartClock;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
-import io.cucumber.java.bs.A;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 import org.junit.Test;
@@ -18,13 +17,6 @@ public class StartClockSteps extends Context {
 
     Context context;
 
-//    @Before
-//    public void loadPageObject(){
-//        context.StartClockObj = new StartClock();
-//        context.commonFunction = new CommonFunction();
-//
-//    }
-
     public StartClockSteps(Context context){
         this.driver = context.driver;
         this.commonFunction = context.commonFunction;
@@ -37,13 +29,13 @@ public class StartClockSteps extends Context {
     public void startTimer() {
         StartClockObj.timerMenu.click();
         commonFunction.sleepInSec(1);
-        System.out.println("----------------set timer 12h45m68s------------------------");
+        log.info("----------------set timer 12h45m68s------------------------");
         List<String> listDigits = Arrays.asList("12h45m68s".replaceAll(".", "\\d").split(""));
         for(String digit:listDigits){
             StartClockObj.clickDigitTime(digit);
         }
         commonFunction.sleepInSec(0.5);
-        System.out.println("Start timer with start button");
+        log.info("Start timer with start button");
         StartClockObj.startPauseTimer.click();
         commonFunction.sleepInSec(5);
         StartClockObj.startPauseTimer.click();
@@ -64,13 +56,13 @@ public class StartClockSteps extends Context {
     @When("Add new timer and click Start")
     public void addNewTimerAndClickStart() {
         StartClockObj.timerMenu.click();
-        System.out.println("----------------set timer 12h45m68s------------------------");
+        log.info("----------------set timer 12h45m68s------------------------");
         List<String> listDigits = Arrays.asList("12h45m68s".replaceAll("[^\\d]", "").split(""));
         for(String digit:listDigits){
             StartClockObj.clickDigitTime(digit);
         }
         commonFunction.sleepInSec(0.5);
-        System.out.println("Start timer with start button");
+        log.info("Start timer with start button");
         commonFunction.findElementById("com.android.deskclock:id/fab").click();
         commonFunction.sleepInSec(10);
         commonFunction.findElementById("com.android.deskclock:id/fab").click();
@@ -82,7 +74,7 @@ public class StartClockSteps extends Context {
 
     @When("Find and start {string} app")
     public void findAndStartClockApp(String app) {
-        System.out.println("Search Clock App");
+        log.info("Search Clock App");
         commonFunction.findElementById("search_container_all_apps").sendKeys(app);
         commonFunction.sleepInSec(0.5);
         commonFunction.findElementByXpath("//*[@content-desc='Clock']").click();

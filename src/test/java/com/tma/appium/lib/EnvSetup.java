@@ -3,6 +3,8 @@ package com.tma.appium.lib;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidElement;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
@@ -14,14 +16,16 @@ import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class EnvSetup {
-    
+
+    private static final Logger log = LogManager.getLogger(EnvSetup.class);
+    public static String SUITE_PATH = System.getProperty("user.dir").replaceAll("\\\\", "/") + "/";
+    public static final String LOGGER_PROPERTY_FILE = SUITE_PATH + "src/test/resources/config/log4j2_configure.xml";
     public static Properties prop;
     public static String DEVICE_NAME= "";
     public static String PLATFORM_NAME= "";
     public static String PLATFORM_VERSION= "";
     public static String APP_PACKAGE= "";
     public static String APP_ACTIVITY= "";
-    public static String SUITE_PATH = System.getProperty("user.dir").replaceAll("\\\\", "/") + "/";
     public static String USER_PROPERTY_FILE_PATH = "";
 
     public EnvSetup() {
@@ -38,14 +42,14 @@ public class EnvSetup {
         } else {
             USER_PROPERTY_FILE_PATH = SUITE_PATH + "src/test/resources/config/" + configFile;
         }
-        System.out.println("Properties File Path: " + EnvSetup.USER_PROPERTY_FILE_PATH);
+        log.info("Properties File Path: " + EnvSetup.USER_PROPERTY_FILE_PATH);
         prop = new Properties();
         try (InputStream input = Files.newInputStream(Paths.get(USER_PROPERTY_FILE_PATH))) {
             prop.load(input);
             prop.entrySet().removeIf(e -> e.getValue().toString().matches("[`'\"]\\s*[`'\"]|\\s+|[`'\"]\\s*|\\s*[`'\"]|^$"));
             prop.putAll(System.getProperties());
         } catch (Exception e) {
-            System.out.println("Exception when load properties file");
+            log.info("Exception when load properties file");
             e.printStackTrace();
         }
 
@@ -71,11 +75,11 @@ public class EnvSetup {
         try {
             URL url = new URL("http://127.0.0.1:4723/wd/hub");
             AppiumDriver<MobileElement> driver = new AppiumDriver<MobileElement>(url, cap);
-            System.out.println("Start Application..........");
+            log.info("Start Application..........");
             return driver;
         }
         catch (Exception e){
-            System.out.println("Can not start Clock ");
+            log.info("Can not start Clock ");
             return null;
         }
     }
@@ -93,11 +97,11 @@ public class EnvSetup {
         try {
             URL url = new URL("http://127.0.0.1:4723/wd/hub");
             AppiumDriver<AndroidElement> driver = new AppiumDriver<AndroidElement>(url, cap);
-            System.out.println("Start Application..........");
+            log.info("Start Application..........");
             return driver;
         }
         catch (Exception e){
-            System.out.println("Can not start Clock ");
+            log.info("Can not start Clock ");
             return null;
         }
     }
@@ -108,7 +112,7 @@ public class EnvSetup {
                 driver.close();
             }
         } catch (Exception e) {
-            System.out.println("No need to quit driver");
+            log.info("No need to quit driver");
         }
 
     }
