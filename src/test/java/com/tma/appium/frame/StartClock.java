@@ -74,10 +74,9 @@ public class StartClock extends CommonFunction {
     @FindBy(xpath = "//*[@content-desc='Add alarm']")
     public MobileElement addAlarm;
 
-    public StartClock(AppiumDriver<MobileElement> driver){
+    public StartClock(AppiumDriver<AndroidElement> driver){
         super(driver);
-        PageFactory.initElements(new AppiumFieldDecorator(super.driver), this);
-        System.out.println();
+//        PageFactory.initElements(new AppiumFieldDecorator(super.driver), this);
     }
 
     public void clickDigitTime(String digit){
