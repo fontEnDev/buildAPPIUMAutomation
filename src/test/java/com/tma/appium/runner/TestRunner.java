@@ -8,7 +8,7 @@ import org.junit.runner.RunWith;
 @CucumberOptions(
         features = {"src/test/resources/feature"},
         glue = {"com.tma.appium.steps"},
-        tags = "@TestAppVelocity"
+        tags = "@APPIUM"
 )
 public class TestRunner {
 }

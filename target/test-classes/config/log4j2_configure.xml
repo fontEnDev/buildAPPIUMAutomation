@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="WARN">
+    <properties>
+        <property name="logMsgPattern">%d{yyyy-MM-dd HH:mm:ss} [%tn] %-5p %c:%L - %m%n</property>
+        <property name="ISO8601Pattern">%d{ISO8601} [%t] %p %c{3} - %m%n</property>
+        <property name="logDir">${sys:logDir}</property>
+    </properties>
+    <appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${logMsgPattern}"/>
+        </Console>
+    </appenders>
+
+    <loggers>
+        <Root level="info">
+            <AppenderRef ref="Console"/>
+        </Root>
+        <Logger name="com.tma.appium" level="debug" additivity="false">
+            <AppenderRef ref="Console"/>
+        </Logger>
+    </loggers>
+</configuration>

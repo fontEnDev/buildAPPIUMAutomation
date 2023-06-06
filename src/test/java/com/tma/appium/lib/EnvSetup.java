@@ -1,13 +1,12 @@
 package com.tma.appium.lib;
 
 import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.android.AndroidElement;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.io.InputStream;
 import java.net.URL;
@@ -63,67 +62,19 @@ public class EnvSetup {
 
     }
 
-
-    public static AppiumDriver<MobileElement> connectAppium(){
+    public static AndroidDriver connectAppium(){
         DesiredCapabilities cap = new DesiredCapabilities();
         cap.setCapability("deviceName", DEVICE_NAME);
         cap.setCapability("platformName", PLATFORM_NAME);
         cap.setCapability("platformVersion", PLATFORM_VERSION);
         cap.setCapability("automationName", "UiAutomator2");
-        cap.setCapability("appPackage", APP_PACKAGE);
-        cap.setCapability("appActivity", APP_ACTIVITY);
+        cap.setCapability("appPackage", "");
+        cap.setCapability("appActivity", "");
         cap.setCapability("noReset", "true");
         cap.setCapability("uiautomator2ServerInstallTimeout", "60000");
         try {
             URL url = new URL("http://127.0.0.1:4723/wd/hub");
-            AppiumDriver<MobileElement> driver = new AppiumDriver<MobileElement>(url, cap);
-            log.info("Start Application..........");
-            return driver;
-        } catch (Exception e) {
-            log.info("Can not start Clock ");
-            return null;
-        }
-    }
-
-    public static AppiumDriver<MobileElement> connectAppiumSaucelabs() {
-        String sSauceLabsUserName = "oauth-votruong020720-d63f4";
-        String sSauceLabsAccessKey = "566f6155-169e-493d-9174-8c1c3d49e746";
-        String sSauceLabsURL = "@ondemand.us-west-1.saucelabs.com:443/wd/hub";
-        try {
-            URL url = new URL("https://" + sSauceLabsUserName + ":" + sSauceLabsAccessKey + sSauceLabsURL);
-            MutableCapabilities caps = new MutableCapabilities();
-            caps.setCapability("platformName", "Android");
-            caps.setCapability("appium:deviceName", "Samsung_Galaxy_S9_free");
-            caps.setCapability("appium:platformVersion", "10.0");
-            java.util.Map<String, Object> sauceOptions = new java.util.HashMap<>();
-            sauceOptions.put("extendedDebugging", "true");
-            sauceOptions.put("parentTunnel", "depottestautomation");;
-            sauceOptions.put("screenResolution", "320x534");
-            sauceOptions.put("idleTimeout", 600);
-            sauceOptions.put("extendedDebugging", true);
-            caps.setCapability("sauce:options", sauceOptions);
-            AppiumDriver<MobileElement> rDriver = new AppiumDriver(url, caps);
-            System.out.println("Driver is initialized...");
-            return rDriver;
-        } catch (Exception e) {
-            log.info("Can not start Clock ");
-            return null;
-        }
-    }
-
-    public static AndroidDriver<AndroidElement> connectAppiumWithAndroidElement() {
-        DesiredCapabilities cap = new DesiredCapabilities();
-        cap.setCapability("deviceName", DEVICE_NAME);
-        cap.setCapability("platformName", PLATFORM_NAME);
-        cap.setCapability("platformVersion", PLATFORM_VERSION);
-        cap.setCapability("automationName", "UiAutomator2");
-        cap.setCapability("appPackage", APP_PACKAGE);
-        cap.setCapability("appActivity", APP_ACTIVITY);
-        cap.setCapability("noReset", "true");
-        cap.setCapability("uiautomator2ServerInstallTimeout", "60000");
-        try {
-            URL url = new URL("http://127.0.0.1:4723/wd/hub");
-            AndroidDriver<AndroidElement> driver = new AndroidDriver<AndroidElement>(url, cap);
+            AndroidDriver driver = new AndroidDriver(url, cap);
             log.info("Start Application..........");
             driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
             return driver;
@@ -133,14 +84,84 @@ public class EnvSetup {
         }
     }
 
-    public static void closeDriver(AppiumDriver<AndroidElement> driver) {
-        try {
-            if (driver != null) {
-                driver.close();
-            }
-        } catch (Exception e) {
-            log.info("No need to quit driver");
-        }
 
-    }
+//    public static AppiumDriver<MobileElement> connectAppium(){
+//        DesiredCapabilities cap = new DesiredCapabilities();
+//        cap.setCapability("deviceName", DEVICE_NAME);
+//        cap.setCapability("platformName", PLATFORM_NAME);
+//        cap.setCapability("platformVersion", PLATFORM_VERSION);
+//        cap.setCapability("automationName", "UiAutomator2");
+//        cap.setCapability("appPackage", APP_PACKAGE);
+//        cap.setCapability("appActivity", APP_ACTIVITY);
+//        cap.setCapability("noReset", "true");
+//        cap.setCapability("uiautomator2ServerInstallTimeout", "60000");
+//        try {
+//            URL url = new URL("http://127.0.0.1:4723/wd/hub");
+//            AppiumDriver<MobileElement> driver = new AppiumDriver<MobileElement>(url, cap);
+//            log.info("Start Application..........");
+//            return driver;
+//        } catch (Exception e) {
+//            log.info("Can not start Clock ");
+//            return null;
+//        }
+//    }
+
+//    public static AppiumDriver<MobileElement> connectAppiumSaucelabs() {
+//        String sSauceLabsUserName = "oauth-votruong020720-d63f4";
+//        String sSauceLabsAccessKey = "566f6155-169e-493d-9174-8c1c3d49e746";
+//        String sSauceLabsURL = "@ondemand.us-west-1.saucelabs.com:443/wd/hub";
+//        try {
+//            URL url = new URL("https://" + sSauceLabsUserName + ":" + sSauceLabsAccessKey + sSauceLabsURL);
+//            MutableCapabilities caps = new MutableCapabilities();
+//            caps.setCapability("platformName", "Android");
+//            caps.setCapability("appium:deviceName", "Samsung_Galaxy_S9_free");
+//            caps.setCapability("appium:platformVersion", "10.0");
+//            java.util.Map<String, Object> sauceOptions = new java.util.HashMap<>();
+//            sauceOptions.put("extendedDebugging", "true");
+//            sauceOptions.put("parentTunnel", "depottestautomation");;
+//            sauceOptions.put("screenResolution", "320x534");
+//            sauceOptions.put("idleTimeout", 600);
+//            sauceOptions.put("extendedDebugging", true);
+//            caps.setCapability("sauce:options", sauceOptions);
+//            AppiumDriver<MobileElement> rDriver = new AppiumDriver(url, caps);
+//            System.out.println("Driver is initialized...");
+//            return rDriver;
+//        } catch (Exception e) {
+//            log.info("Can not start Clock ");
+//            return null;
+//        }
+//    }
+//
+//    public static AndroidDriver<AndroidElement> connectAppiumWithAndroidElement() {
+//        DesiredCapabilities cap = new DesiredCapabilities();
+//        cap.setCapability("deviceName", DEVICE_NAME);
+//        cap.setCapability("platformName", PLATFORM_NAME);
+//        cap.setCapability("platformVersion", PLATFORM_VERSION);
+//        cap.setCapability("automationName", "UiAutomator2");
+//        cap.setCapability("appPackage", APP_PACKAGE);
+//        cap.setCapability("appActivity", APP_ACTIVITY);
+//        cap.setCapability("noReset", "true");
+//        cap.setCapability("uiautomator2ServerInstallTimeout", "60000");
+//        try {
+//            URL url = new URL("http://127.0.0.1:4723/wd/hub");
+//            AndroidDriver<AndroidElement> driver = new AndroidDriver<AndroidElement>(url, cap);
+//            log.info("Start Application..........");
+//            driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+//            return driver;
+//        } catch (Exception e) {
+//            log.info("Can not start Clock ");
+//            return null;
+//        }
+//    }
+
+//    public static void closeDriver(AppiumDriver<AndroidElement> driver) {
+//        try {
+//            if (driver != null) {
+//                driver.close();
+//            }
+//        } catch (Exception e) {
+//            log.info("No need to quit driver");
+//        }
+//
+//    }
 }
