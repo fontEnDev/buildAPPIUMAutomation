@@ -10,16 +10,16 @@ import org.openqa.selenium.support.PageFactory;
 public class HomePage extends CommonFunction{
 
 
-    public @FindBy(id ="com.android.launcher3:id/page_indicator")
-    WebElement pageIndicator;
+    @FindBy(id ="com.android.launcher3:id/page_indicator")
+    public WebElement pageIndicator;
 
-    public @FindBy(id ="com.android.quicksearchbox:id/search_widget_text")
-    WebElement searchWidget;
+    @FindBy(id ="com.android.quicksearchbox:id/search_widget_text")
+    public WebElement searchWidget;
 
-    public @FindBy(id ="com.android.launcher3:id/search_container_all_apps")
-    WebElement searchApp;
+    @FindBy(id ="com.android.launcher3:id/search_container_all_apps")
+    public WebElement searchApp;
 
-    public HomePage(AndroidDriver driver) {
+    public HomePage(AppiumDriver driver) {
         super(driver);
         PageFactory.initElements(super.driver, this);
     }

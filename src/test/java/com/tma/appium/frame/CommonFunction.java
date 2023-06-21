@@ -24,12 +24,12 @@ import java.util.concurrent.TimeUnit;
 
 public class CommonFunction {
 
-    protected AndroidDriver driver;
+    protected AppiumDriver driver;
 
     private final static PointerInput FINGER = new PointerInput(TOUCH, "finger");
     private final Logger log = LogManager.getLogger(CommonFunction.class);
 
-    public CommonFunction(AndroidDriver driver){
+    public CommonFunction(AppiumDriver driver){
         this.driver = driver;
     }
 
@@ -53,7 +53,7 @@ public class CommonFunction {
     }
     public int countNumberElementByXpath(String xpath){
         System.out.println("Entering Step: " + Thread.currentThread().getStackTrace()[1].getMethodName());
-        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         int numberElement;
         try{
             List <WebElement> element= driver.findElements(By.xpath(xpath));

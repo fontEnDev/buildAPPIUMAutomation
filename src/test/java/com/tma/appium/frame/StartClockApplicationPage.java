@@ -1,6 +1,7 @@
 package com.tma.appium.frame;
 
 //import io.appium.java_client.MobileElement;
+import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
         import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -66,7 +67,7 @@ public class StartClockApplicationPage extends CommonFunction {
     @FindBy(xpath = "//*[@content-desc='Add alarm']")
     public WebElement addAlarm;
 
-    public StartClockApplicationPage(AndroidDriver driver){
+    public StartClockApplicationPage(AppiumDriver driver){
         super(driver);
         PageFactory.initElements(this.driver, this);
     }

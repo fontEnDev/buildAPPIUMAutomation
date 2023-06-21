@@ -39,9 +39,9 @@ public class VelocityApplicationSteps extends Context{
             commonFunction.sleepInSec(1);
             VelocityApplicationObj.inputProfile.sendKeys(nameProfile);
             VelocityApplicationObj.inputAddress.sendKeys(URL);
-            driver.pressKey(new KeyEvent(AndroidKey.BACK));
+            driver.navigate().back();
             commonFunction.sleepInSec(0.5);
-            driver.pressKey(new KeyEvent(AndroidKey.BACK));
+            driver.navigate().back();
             commonFunction.sleepInSec(0.5);
             VelocityApplicationObj.btnOk_Save.click();
             commonFunction.sleepInSec(1);
